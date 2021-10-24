@@ -1,7 +1,9 @@
 package com.example.headsupcv
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -26,4 +28,22 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "data.db", n
         return status
     }
 
+    @SuppressLint("Range")
+    fun getData(): ArrayList<List<String>> {
+        var data= arrayListOf<List<String>>()
+        val sqliteDB:SQLiteDatabase=writableDatabase
+        val cursor:Cursor=sqliteDB.query("celebrates" , null,null, null, null, null,null)
+        if (cursor.moveToFirst()){
+            do {
+                data.add(listOf(cursor.getString(cursor.getColumnIndex("Name")),
+                    cursor.getString(cursor.getColumnIndex("Taboo1")),
+                    cursor.getString(cursor.getColumnIndex("Taboo2")),
+                    cursor.getString(cursor.getColumnIndex("Taboo3")))
+                )
+            }while (cursor.moveToNext())
+        }
+        return data
+    }
+
 }
+

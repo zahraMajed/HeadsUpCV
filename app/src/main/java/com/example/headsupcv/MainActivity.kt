@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
             LL1.visibility=View.GONE
             LL2.visibility=View.VISIBLE
             countDownTimer()
-            getAPIresult()
+            //getAPIresult()
+            getDBdata()
         }//end btnStart Listener
 
         btnAdd.setOnClickListener(){
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
     }//end onConfigurationChanged()
 
-    fun getAPIresult(){
+    /*fun getAPIresult(){
         val apiInterface=ApiClint().getClient()?.create(ApiInterface::class.java)
 
         if (apiInterface != null){
@@ -127,7 +128,13 @@ class MainActivity : AppCompatActivity() {
 
             })
         }
-    }//end getAPIresult()
+    }//end getAPIresult()*/
+
+    fun getDBdata(){
+        val dbHelper=DataBaseHelper(this)
+        celebList.addAll(dbHelper.getData())
+        getCele()
+    }
 
     fun getCele(){
         tvName.text=celebList[celeb][0]

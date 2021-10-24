@@ -16,7 +16,7 @@ class HeadsActivity : AppCompatActivity() {
     lateinit var edT3:EditText
     lateinit var btnSubmit:Button
     lateinit var Celebrities :ArrayList<List<String>>
-
+    val dbHelper=DataBaseHelper(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heads)
@@ -27,9 +27,7 @@ class HeadsActivity : AppCompatActivity() {
         edT3=findViewById(R.id.edT3)
         btnSubmit=findViewById(R.id.btnSubmit)
 
-        Celebrities= arrayListOf()
-        rv_add.adapter=RecyclerAdapter(Celebrities)
-        rv_add.layoutManager=LinearLayoutManager(this)
+        getData()
 
        btnSubmit.setOnClickListener(){
             if (edName.text.isNotEmpty() && edT1.text.isNotEmpty() &&
@@ -38,13 +36,16 @@ class HeadsActivity : AppCompatActivity() {
                 var t1= edT1.text.toString()
                 var t2= edT2.text.toString()
                 var t3= edT3.text.toString()
-                val dbHelper=DataBaseHelper(this)
                 val status= dbHelper.saveData(name,t1,t2,t3)
                 Toast.makeText(applicationContext, "data added in $status", Toast.LENGTH_SHORT).show()
-                Celebrities.add(listOf(name,t1,t2,t3))
-                rv_add.adapter?.notifyDataSetChanged()
+                getData()
             }
         }//end listener
 
+    }
+
+    fun getData(){
+        rv_add.adapter=RecyclerAdapter(dbHelper.getData())
+        rv_add.layoutManager=LinearLayoutManager(this)
     }
 }
