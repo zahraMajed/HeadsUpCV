@@ -1,6 +1,7 @@
 package com.example.headsupcv
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var LL1:LinearLayout
     lateinit var btnStrat:Button
+    lateinit var btnAdd:Button
 
     lateinit var LL2:LinearLayout
     lateinit var tvRotate:TextView
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         LL1=findViewById(R.id.LL1)
         btnStrat=findViewById(R.id.btnStart)
+        btnAdd=findViewById(R.id.btnAdd)
 
         LL2=findViewById(R.id.LL2)
         tvRotate=findViewById(R.id.tvRotate)
@@ -57,6 +60,11 @@ class MainActivity : AppCompatActivity() {
             countDownTimer()
             getAPIresult()
         }//end btnStart Listener
+
+        btnAdd.setOnClickListener(){
+            intent= Intent(this,HeadsActivity::class.java)
+            startActivity(intent)
+        }
 
     }//end onCreate()
 
