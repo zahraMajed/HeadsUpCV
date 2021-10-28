@@ -1,10 +1,7 @@
 package com.example.headsupcv
 
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -12,12 +9,15 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    //Declare a variable to hold count down timer's paused status
+    private var isCanceled = false
+    //Declare a variable to hold CountDownTimer remaining time
+    private var timeRemaining: Long = 0
+
     lateinit var tvTimer:TextView
 
     lateinit var LL1:LinearLayout
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     var celebList= arrayListOf<List<String>>()
     var celeb=0
+
+    val dbHelper=DataBaseHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +57,14 @@ class MainActivity : AppCompatActivity() {
         tvT3=findViewById(R.id.tvT3)
 
         btnStrat.setOnClickListener(){
-            LL1.visibility=View.GONE
-            LL2.visibility=View.VISIBLE
-            countDownTimer()
-            //getAPIresult()
-            getDBdata()
+            if (dbHelper.getData().isNotEmpty()){
+                LL1.visibility=View.GONE
+                LL2.visibility=View.VISIBLE
+                countDownTimer()
+                //getAPIresult()
+                getDBdata()
+            }else
+                Toast.makeText(applicationContext, "you can not start the game! \n add celebrites to strat it", Toast.LENGTH_SHORT).show()
         }//end btnStart Listener
 
         btnAdd.setOnClickListener(){
@@ -69,10 +74,24 @@ class MainActivity : AppCompatActivity() {
 
     }//end onCreate()
 
-    fun countDownTimer(){
-        object : CountDownTimer(10000, 1000) {
+    fun countDownTimer(): CountDownTimer? {
+        isCanceled = false;
+        val millisInFuture: Long = 30000 //30 seconds
+        val countDownInterval: Long = 1000 //1 second
+
+        return object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                tvTimer.setText("Time: " + millisUntilFinished / 1000)
+                if (isCanceled){
+                    cancel()
+                    LL2.visibility=View.GONE
+                    LL3.visibility=View.GONE
+                    LL1.visibility=View.VISIBLE
+                }else{
+                    tvTimer.setText("Time: " + millisUntilFinished / 1000)
+                    //Put count down timer remaining time in a variable
+                    timeRemaining = millisUntilFinished;
+                }
+
             }
             override fun onFinish() {
                 tvTimer.setText("Time: -")
@@ -131,16 +150,21 @@ class MainActivity : AppCompatActivity() {
     }//end getAPIresult()*/
 
     fun getDBdata(){
-        val dbHelper=DataBaseHelper(this)
         celebList.addAll(dbHelper.getData())
         getCele()
     }
 
     fun getCele(){
-        tvName.text=celebList[celeb][0]
-        tvT1.text=celebList[celeb][1]
-        tvT2.text=celebList[celeb][2]
-        tvT3.text=celebList[celeb][3]
+        if (celeb < celebList.size){
+            tvName.text=celebList[celeb][0]
+            tvT1.text=celebList[celeb][1]
+            tvT2.text=celebList[celeb][2]
+            tvT3.text=celebList[celeb][3]
+        }else
+        {
+            isCanceled=true
+            tvTimer.setText("You have played with all celebrities \n Add new ones for a stroger challenge!");
+        }
     }
 
 }//end class

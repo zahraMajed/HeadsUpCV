@@ -92,8 +92,12 @@ class HeadsActivity : AppCompatActivity() {
             tvNoData.visibility=View.INVISIBLE
             rv_add.adapter=RecyclerAdapter(dbHelper.getData())
             rv_add.layoutManager=LinearLayoutManager(this)
-        }else
+        }else{
             tvNoData.visibility=View.VISIBLE
+            rv_add.adapter=RecyclerAdapter(dbHelper.getData())
+            rv_add.layoutManager=LinearLayoutManager(this)
+        }
+
     }
 
 
