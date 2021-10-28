@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+
             android:ems="10"
             android:hint="Enter taboo"
             android:inputType="textPersonName"
@@ -43,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-
             android:ems="10"
             android:hint="Enter taboo2"
             android:inputType="textPersonName"
@@ -59,14 +59,33 @@
             android:hint="Enter taboo3"
             android:inputType="textPersonName"
             android:minHeight="48dp" />
-
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="#03A9F4"
-            android:text="Add" />
+            android:text="Add celebrity" />
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#03A9F4"
+            android:text="Update celebrity information" />
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#03A9F4"
+            android:text="Delete celebrity" />
+
+        <TextView
+            android:id="@+id/tvNoData"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="There is no data yet!"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

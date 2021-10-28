@@ -45,5 +45,17 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "data.db", n
         return data
     }
 
-}
+    fun updateData(name:String, t1:String, t2:String, t3:String){
+        val ConVal=ContentValues()
+        ConVal.put("Taboo1",t1)
+        ConVal.put("Taboo2",t2)
+        ConVal.put("Taboo3",t3)
+        this.writableDatabase.update("celebrates", ConVal,"Name=?" , arrayOf(name))
+    }
+
+    fun delCeleb(name:String){
+        this.writableDatabase.delete("celebrates","Name=?" , arrayOf(name) )
+    }
+
+}//end class
 

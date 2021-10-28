@@ -44,7 +44,7 @@
 
         <Button
             android:id="@+id/btnStart"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
@@ -53,12 +53,12 @@
             android:textSize="20sp" />
         <Button
             android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:backgroundTint="#03A9F4"
-            android:text="Add"
+            android:text="Manage Celebrates"
             android:textSize="20sp" />
     </LinearLayout>
 
